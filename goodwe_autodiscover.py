@@ -118,6 +118,29 @@ async def get_runtime_data(inverter):
             print(f"{sensor.id_}: \t\t {sensor.name} = {runtime_data[sensor.id_]} {sensor.unit}")
 
 
+def print_inverter_info(inverter):
+    fields = (
+        ("Model", inverter.model_name),
+        ("Serial number", inverter.serial_number),
+        ("Rated power", inverter.rated_power),
+        ("AC output type", inverter.ac_output_type),
+        ("Firmware", inverter.firmware),
+        ("ARM firmware", inverter.arm_firmware),
+        ("Modbus version", inverter.modbus_version),
+        ("DSP1 version", inverter.dsp1_version),
+        ("DSP2 version", inverter.dsp2_version),
+        ("DSP SVN version", inverter.dsp_svn_version),
+        ("ARM version", inverter.arm_version),
+        ("ARM SVN version", inverter.arm_svn_version),
+    )
+
+    print("Inverter information:")
+    for label, value in fields:
+        if value is not None:
+            print(f"{label}: {value}")
+    print()
+
+
 async def main(host=None, port=8899, family="ET", timeout=1, dtls=False, broadcast_host=None, discovery_port=48899, discovery_timeout=1):
     try:
         if host:
@@ -139,6 +162,7 @@ async def main(host=None, port=8899, family="ET", timeout=1, dtls=False, broadca
     if inverter is None:
         return
 
+    print_inverter_info(inverter)
     await get_runtime_data(inverter)
 
 
