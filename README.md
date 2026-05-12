@@ -41,6 +41,30 @@ Skip discovery and connect to a known inverter address:
 python goodwe_autodiscover.py --host <inverter-ip>
 ```
 
+By default the script prints every runtime sensor returned by the inverter. Pass
+`--sensors-file sensors.txt` to print only a supplied shortlist.
+Runtime values are printed as a `label | value | sensor` table.
+Inverter information is shown only when no CLI arguments are passed, or when
+`--info` is supplied.
+
+Show inverter information with a known host:
+
+```sh
+python goodwe_autodiscover.py --host <inverter-ip> --info
+```
+
+Poll runtime values every 30 seconds:
+
+```sh
+python goodwe_autodiscover.py --host <inverter-ip> --sensors-file sensors.txt --poll
+```
+
+Poll runtime values every 10 seconds:
+
+```sh
+python goodwe_autodiscover.py --host <inverter-ip> --sensors-file sensors.txt --poll 10
+```
+
 Force DTLS explicitly:
 
 ```sh
@@ -83,9 +107,42 @@ In that case the source address of the UDP reply is treated as the inverter host
 --family            GoodWe inverter family. Defaults to ET.
 --timeout           Timeout for inverter requests. Defaults to 1 second.
 --dtls              Force DTLS mode.
+--info              Show inverter information before runtime values.
+--poll [SECONDS]    Poll runtime values. Defaults to 30 seconds.
 --broadcast-host    Directed broadcast address for fallback discovery.
 --discovery-port    UDP discovery port. Defaults to 48899.
 --discovery-timeout Timeout for directed fallback discovery. Defaults to 1 second.
+--sensors-file      Optional sensor ID shortlist.
+```
+
+## Recommended Dashboard Sensors
+
+For an ET/EH style hybrid inverter, the five high-signal runtime values are:
+
+```text
+battery_soc         Battery percentage
+ppv                 Solar production in watts
+pbattery1           Battery watts; positive discharging, negative charging
+house_consumption   House draw in watts
+active_power        Grid watts; positive exporting, negative importing
+```
+
+`ppv` is the normal total PV power sensor and is available across more GoodWe
+families. `ppv_total` is an extended ET/EH MPPT value and is useful only if your
+model exposes it.
+
+Other useful sensors to keep in mind:
+
+```text
+battery_mode_label      Charging/discharging/standby state
+grid_in_out_label       Importing/exporting/idle state
+e_day                   Today's PV generation
+e_total                 Lifetime PV generation
+e_bat_charge_total      Lifetime battery charge energy
+e_bat_discharge_total   Lifetime battery discharge energy
+meter_e_total_imp       Lifetime grid import energy
+meter_e_total_exp       Lifetime grid export energy
+temperature             Inverter temperature
 ```
 
 ## Notes
