@@ -32,13 +32,13 @@ The current PyPI `goodwe` release may not support `dtls=True`. If your dongle ad
 Try autodiscovery:
 
 ```sh
-python goodwe_autodiscover.py
+python goodwe-autodiscovery.py
 ```
 
 Skip discovery and connect to a known inverter address:
 
 ```sh
-python goodwe_autodiscover.py --host <inverter-ip>
+python goodwe-autodiscovery.py --host <inverter-ip>
 ```
 
 By default the script prints every runtime sensor returned by the inverter. Pass
@@ -50,45 +50,45 @@ Inverter information is shown only when no CLI arguments are passed, or when
 Show inverter information with a known host:
 
 ```sh
-python goodwe_autodiscover.py --host <inverter-ip> --info
+python goodwe-autodiscovery.py --host <inverter-ip> --info
 ```
 
 Poll runtime values every 30 seconds:
 
 ```sh
-python goodwe_autodiscover.py --host <inverter-ip> --sensors-file sensors.txt --poll
+python goodwe-autodiscovery.py --host <inverter-ip> --sensors-file sensors.txt --poll
 ```
 
 Poll runtime values every 10 seconds:
 
 ```sh
-python goodwe_autodiscover.py --host <inverter-ip> --sensors-file sensors.txt --poll 10
+python goodwe-autodiscovery.py --host <inverter-ip> --sensors-file sensors.txt --poll 10
 ```
 
 Force DTLS explicitly:
 
 ```sh
-python goodwe_autodiscover.py --host <inverter-ip> --dtls --family ET
+python goodwe-autodiscovery.py --host <inverter-ip> --dtls --family ET
 ```
 
 Use a different directed broadcast address:
 
 ```sh
-python goodwe_autodiscover.py --broadcast-host <subnet-broadcast-ip>
+python goodwe-autodiscovery.py --broadcast-host <subnet-broadcast-ip>
 ```
 
 Increase only the fallback discovery wait time:
 
 ```sh
-python goodwe_autodiscover.py --discovery-timeout 10
+python goodwe-autodiscovery.py --discovery-timeout 10
 ```
 
 ## Directed Discovery Fallback
 
-`goodwe_autodiscover.py` includes a directed UDP discovery fallback using the same packet from the upstream issue comment:
+`goodwe-autodiscovery.py` includes a directed UDP discovery fallback using the same packet from the upstream issue comment:
 
 ```sh
-python goodwe_autodiscover.py --broadcast-host <subnet-broadcast-ip> --discovery-timeout 10
+python goodwe-autodiscovery.py --broadcast-host <subnet-broadcast-ip> --discovery-timeout 10
 ```
 
 A DTLS-capable dongle may reply with something like:
@@ -97,7 +97,7 @@ A DTLS-capable dongle may reply with something like:
 dongle@sn,dtls_port:8899,<dongle-serial>
 ```
 
-In that case the source address of the UDP reply is treated as the inverter host, and `goodwe_autodiscover.py` enables `dtls=True`.
+In that case the source address of the UDP reply is treated as the inverter host, and `goodwe-autodiscovery.py` enables `dtls=True`.
 
 ## CLI Options
 
